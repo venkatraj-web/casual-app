@@ -36,7 +36,7 @@ class Casual{
 
   Casual.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    casualId = json['casual_!d'];
+    casualId = json['casual_id'];
     casualName = json['casual_name'];
     email = json['email'];
     password = json['password'];

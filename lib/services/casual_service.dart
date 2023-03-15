@@ -39,6 +39,7 @@ class CasualService {
     var responsedJson;
     try {
       var response = await _repository!.httpGet("casual/profile");
+      // print(response.body);
       responsedJson = exceptionHandlers!.returnResponse(response);
     } on SocketException {
       throw FetchDataException("No Internet Connection");
@@ -46,6 +47,21 @@ class CasualService {
       throw e;
     }
     return await responsedJson;
+  }
+
+  Future<dynamic> registerCasual(List<dynamic> images, Casual data) async{
+    var responsedJson;
+
+    try {
+      var response = await _repository!.httpPostFormData("casual/store", images, data);
+      responsedJson = exceptionHandlers!.returnResponse(response);
+    } on SocketException {
+      throw FetchDataException("No Internet Connection");
+    } on Exception catch (e) {
+      print(e);
+      throw e;
+    }
+    return responsedJson;
   }
 
 

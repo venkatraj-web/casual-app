@@ -11,8 +11,9 @@ class Constants{
   static Size screenSize(BuildContext context) {
     return MediaQuery.of(context).size; 
   }
-  
-  static const String Domain = "http://192.168.1.7:3006/api";
+
+  static const String LocalDomain = "http://192.168.1.7:3006/api";
+  static const String Domain = "http://www.qikcasual.com/api";
   static const String S3Bucket = "https://qikcasual-dev-s3-upload.s3.ap-southeast-1.amazonaws.com/";
   static const Color PRIMARYBLUE = Color(0xff2C9FF5);
   static const Color SECONDARYBLUE = Color(0xff629AC4);

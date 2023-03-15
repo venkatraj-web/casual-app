@@ -9,11 +9,13 @@ class ExceptionHandlers {
     // print(response.statusCode);
     switch (response.statusCode){
       case 200:
+      case 201:
+      case 401:
         var responseJson = json.decode(response.body.toString());
         return await responseJson;
       case 400:
         throw BadRequestException(response.body.toString());
-      case 401:
+      // case 401:
       case 403:
         // print(json.decode(response.body)['message']);
         // throw UnAuthorizedException(response.body.toString());

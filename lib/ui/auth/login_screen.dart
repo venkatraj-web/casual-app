@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:casual/models/casual.dart';
 import 'package:casual/services/casual_service.dart';
+import 'package:casual/ui/auth/register_screen.dart';
 import 'package:casual/ui/bottom_bar.dart';
 import 'package:casual/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -176,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
             style: TextStyle(fontSize: 18.0),),
         ),
         onPressed: () {
-
+          Navigator.push(context, MaterialPageRoute(builder: (ctx) => RegisterScreen()));
         },
       )
     );

@@ -27,7 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
    getCasualProfile() async{
     try {
       var result = await _casualService.getCasualProfile();
-      print(result);
+      // print(result);
       if(result['status']){
         setState(() {
           _casualData = result['casual'];
@@ -37,11 +37,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         // print(Casual.fromJson(result['casual']).casualPhoneNo);
         // print(result['casual']);
       }else{
-        Constants.showSnackBar(context);
+        // Constants.showSnackBar(context);
+        Constants.checkTokenExpiration(context, result['message']);
       }
     } on Exception catch (e) {
       // Constants.showFlushBar(context, e.toString());
-      print( e);
+      // print( e);
       Constants.checkTokenExpiration(context, e);
     }
   }
@@ -73,6 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Text("PhoneNo : ${_casual!.casualPhoneNo}"),
               Gap(14),
               Text("City : ${_casual!.city!.cityName}"),
+              Gap(14),
 
             ],
           )

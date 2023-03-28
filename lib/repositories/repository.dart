@@ -7,8 +7,8 @@ import 'package:http_parser/http_parser.dart';
 
 class Repository{
 
-  // String _baseUrl = "http://www.qikcasual.com/api";
-  String _baseUrl = "http://192.168.1.7:3006/api";
+  String _baseUrl = "http://www.qikcasual.com/api";
+  // String _baseUrl = "http://192.168.1.7:3006/api";
 
   String formater(String url){
     return _baseUrl + "/" + url;
@@ -55,11 +55,12 @@ class Repository{
       var f = await http.MultipartFile.fromPath(file['name'], image.path, contentType: new MediaType("image", "jpg"));
       newList.add(f);
     }
-// print(data.cityId!.runtimeType);
-    request.fields['casual_name'] = data.casualName!;
+    // print(data.cityId != null ? data.cityId.toString() : null.toString() );
+    // print(data.cityId.toString() );
+    request.fields['casual_name'] = data.casual_name!;
     request.fields['email'] = data.email!;
-    request.fields['casual_phone_no'] = data.casualPhoneNo!;
-    request.fields['cityId'] = data.cityId!.toString();
+    request.fields['casual_phone_no'] = data.casual_phone_no!;
+    request.fields['cityId'] = data.cityId != null ? data.cityId.toString() : null.toString();
     request.fields['password'] = data.password!;
     request.fields['passwordConfirmation'] = data.passwordConfirmation!;
     request.files.addAll(newList);

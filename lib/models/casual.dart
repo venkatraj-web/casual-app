@@ -2,61 +2,61 @@ import 'city.dart';
 
 class Casual{
   int? id;
-  String? casualId;
-  String? casualName;
+  String? casual_id;
+  String? casual_name;
   String? email;
   String? password;
   String? passwordConfirmation;
-  String? casualPhoneNo;
+  String? casual_phone_no;
   int? cityId;
-  String? dateOfBirth;
+  String? date_of_birth;
   String? gender;
-  String? idProof;
-  String? casualAvatar;
+  String? id_proof;
+  String? casual_avatar;
   String? role;
-  int? identificationNumber;
-  String? idCardFrontPhoto;
-  String? idCardBackPhoto;
+  int? identification_number;
+  String? id_card_front_photo;
+  String? id_card_back_photo;
   // String? qrCode;
   // String? emailVerifiedAt;
-  String? rememberToken;
-  String? passwordResetToken;
-  String? passwordResetExpires;
-  String? createdUserId;
-  String? modifiedUserId;
+  String? remember_token;
+  String? password_reset_token;
+  String? password_reset_expires;
+  String? created_user_id;
+  String? modified_user_id;
   bool? active;
   String? createdAt;
   String? updatedAt;
   City? city;
 
-  Casual({this.id, this.casualId, this.casualName, this.email, this.password, this.passwordConfirmation,
-  this.casualPhoneNo, this.cityId, this.dateOfBirth, this.gender, this.idProof, this.casualAvatar, this.role, this.identificationNumber,
-  this.idCardFrontPhoto, this.idCardBackPhoto, this.rememberToken, this.passwordResetToken, this.passwordResetExpires, this.active,
-  this.createdUserId, this.modifiedUserId, this.createdAt, this.updatedAt, this.city});
+  Casual({this.id, this.casual_id, this.casual_name, this.email, this.password, this.passwordConfirmation,
+  this.casual_phone_no, this.cityId, this.date_of_birth, this.gender, this.id_proof, this.casual_avatar, this.role, this.identification_number,
+  this.id_card_front_photo, this.id_card_back_photo, this.remember_token, this.password_reset_token, this.password_reset_expires, this.active,
+  this.created_user_id, this.modified_user_id, this.createdAt, this.updatedAt, this.city});
 
   Casual.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    casualId = json['casual_id'];
-    casualName = json['casual_name'];
+    casual_id = json['casual_id'];
+    casual_name = json['casual_name'];
     email = json['email'];
     password = json['password'];
     passwordConfirmation = json['passwordConfirmation'];
-    casualPhoneNo = json['casual_phone_no'];
+    casual_phone_no = json['casual_phone_no'];
     cityId = json['cityId'];
-    dateOfBirth = json['date_of_birth'];
+    date_of_birth = json['date_of_birth'];
     gender = json['gender'];
-    idProof = json['id_proof'];
-    casualAvatar = json['casual_avatar'];
+    id_proof = json['id_proof'];
+    casual_avatar = json['casual_avatar'];
     role = json['role'];
-    identificationNumber = json['identification_number'];
-    idCardFrontPhoto = json['id_card_front_photo'];
-    idCardBackPhoto = json['id_card_back_photo'];
-    rememberToken = json['remember_token'];
-    passwordResetToken = json['password_reset_token'];
-    passwordResetExpires = json['password_reset_expires'];
+    identification_number = json['identification_number'];
+    id_card_front_photo = json['id_card_front_photo'];
+    id_card_back_photo = json['id_card_back_photo'];
+    remember_token = json['remember_token'];
+    password_reset_token = json['password_reset_token'];
+    password_reset_expires = json['password_reset_expires'];
     active = json['active'];
-    createdUserId = json['created_user_id'];
-    modifiedUserId = json['modified_user_id'];
+    created_user_id = json['created_user_id'];
+    modified_user_id = json['modified_user_id'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     city = json['city'] != null 
@@ -68,27 +68,27 @@ class Casual{
     Map<String, dynamic> data = new Map<String, dynamic>();
 
     data['id'] = this.id;
-    data['casualId'] = this.casualId;
-    data['casualName'] = this.casualName;
+    data['casual_id'] = this.casual_id;
+    data['casual_name'] = this.casual_name;
     data['email'] = this.email;
     data['password'] = this.password;
     data['passwordConfirmation'] = this.passwordConfirmation;
-    data['casualPhoneNo'] = this.casualPhoneNo;
+    data['casual_phone_no'] = this.casual_phone_no;
     data['cityId'] = this.cityId;
-    data['dateOfBirth'] = this.dateOfBirth;
+    data['date_of_birth'] = this.date_of_birth;
     data['gender'] = this.gender;
-    data['idProof'] = this.idProof;
-    data['casualAvatar'] = this.casualAvatar;
+    data['id_proof'] = this.id_proof;
+    data['casual_avatar'] = this.casual_avatar;
     data['role'] = this.role;
-    data['identificationNumber'] = this.identificationNumber;
-    data['idCardFrontPhoto'] = this.idCardFrontPhoto;
-    data['idCardBackPhoto'] = this.idCardBackPhoto;
-    data['rememberToken'] = this.rememberToken;
-    data['passwordResetToken'] = this.passwordResetToken;
-    data['passwordResetExpires'] = this.passwordResetExpires;
+    data['identification_number'] = this.identification_number;
+    data['id_card_front_photo'] = this.id_card_front_photo;
+    data['id_card_back_photo'] = this.id_card_back_photo;
+    data['remember_token'] = this.remember_token;
+    data['password_reset_token'] = this.password_reset_token;
+    data['password_reset_expires'] = this.password_reset_expires;
     data['active'] = this.active;
-    data['createdUserId'] = this.createdUserId;
-    data['modifiedUserId'] = this.modifiedUserId;
+    data['created_user_id'] = this.created_user_id;
+    data['modified_user_id'] = this.modified_user_id;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
 
@@ -102,27 +102,27 @@ class Casual{
   getCasualDataWithNull(){
     Map<String, dynamic> casualDataWithNull = {
       'id' : null,
-      'casualId' : null,
-      'casualName' : null,
+      'casual_id' : null,
+      'casual_name' : null,
       'email' : null,
       'password' : null,
       'passwordConfirmation' : null,
-      'casualPhoneNo' : null,
+      'casual_phone_no' : null,
       'cityId' : null,
-      'dateOfBirth' : null,
+      'date_of_birth' : null,
       'gender' : null,
-      'idProof' : null,
-      'casualAvatar' : null,
+      'id_proof' : null,
+      'casual_avatar' : null,
       'role' : null,
-      'identificationNumber' : null,
-      'idCardFrontPhoto' : null,
-      'idCardBackPhoto' : null,
-      'rememberToken' : null,
-      'passwordResetToken' : null,
-      'passwordResetExpires' : null,
+      'identification_number' : null,
+      'id_card_front_photo' : null,
+      'id_card_back_photo' : null,
+      'remember_token' : null,
+      'password_reset_token' : null,
+      'password_reset_expires' : null,
       'active' : null,
-      'createdUserId' : null,
-      'modifiedUserId' : null,
+      'created_user_id' : null,
+      'modified_user_id' : null,
       'createdAt' : null,
       'updatedAt' : null,
     };

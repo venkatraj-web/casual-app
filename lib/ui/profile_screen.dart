@@ -60,20 +60,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Center(
                 child: CircleAvatar(
                   backgroundColor: Colors.blueGrey,
-                  backgroundImage: _casual!.casualAvatar == null
+                  backgroundImage: _casual!.casual_avatar == null
                     ? Image.asset("assets/images/person.png").image
-                    : NetworkImage(Constants.S3Bucket + _casual!.casualAvatar!),
+                    : NetworkImage(Constants.S3Bucket + _casual!.casual_avatar!),
                   radius: 70,
                 ),
               ),
               Gap(14),
-              Text("Name : ${_casual!.casualName}"),
+              Text("Name : ${_casual!.casual_name}"),
               Gap(14),
               Text("Email : ${_casual!.email}"),
               Gap(14),
-              Text("PhoneNo : ${_casual!.casualPhoneNo}"),
+              Text("PhoneNo : ${_casual!.casual_phone_no}"),
               Gap(14),
-              Text("City : ${_casual!.city!.cityName}"),
+              // Text("City : ${_casual!.city!.cityName}"),
               Gap(14),
 
             ],

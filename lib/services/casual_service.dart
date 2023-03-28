@@ -64,5 +64,9 @@ class CasualService {
     return responsedJson;
   }
 
+  Future getCities() async{
+    var responsedJson;
+    var response = await _repository!.httpGet('');
+  }
 
 }

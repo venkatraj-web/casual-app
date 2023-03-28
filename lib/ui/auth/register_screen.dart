@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:casual/models/casual.dart';
 import 'package:casual/services/casual_service.dart';
+import 'package:casual/ui/auth/login_screen.dart';
 import 'package:casual/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -23,6 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   List fileData = [];
   final CasualService _casualService = CasualService();
   final Casual _casual = Casual();
+  Map<String, dynamic> _errors = <String, dynamic>{};
 
   // =======TextEditingController==================
   final _signUpForm = GlobalKey<FormState>();
@@ -69,28 +71,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ClipOval(
                     child: Image.file(_avatar!, width: 150, height: 150, fit: BoxFit.cover),
                   ): Center(),
-                  const Gap(14),
-                  ElevatedButton(onPressed: () async {
+                  const Gap(10),
+                  _buildButton(title: "profile", icon: Icons.camera_alt_outlined, onClicked: () async {
                     pickImage(ImageSource.camera, "avatar");
-                  }, child: Text("profile")),
+                  }),
+                  Gap(10),
+                  _errors['casual_avatar'] != null ?
+                      Text(_errors['casual_avatar'], style: TextStyle(color: Colors.red),):
+                      Text(""),
                   Divider(thickness: 1,color: Colors.blueGrey,),
                   _idProofFront != null ?
                   ClipOval(
                     child: Image.file(_idProofFront!, width: 150, height: 150, fit: BoxFit.cover,),
                   ):Center(),
                   const Gap(14),
-                  ElevatedButton(onPressed: () {
+                  _buildButton(title: "id Proof Front", icon: Icons.camera_alt_outlined, onClicked: () {
                     pickImage(ImageSource.camera, "idProofFront");
-                  }, child: Text("Id Proof Front")),
+                  }),
+                  _errors['id_card_front_photo'] != null ?
+                  Text(_errors['id_card_front_photo'], style: TextStyle(color: Colors.red),):
+                  Text(""),
                   Divider(thickness: 1,color: Colors.blueGrey,),
                   _idProofBack != null ?
                   ClipOval(
                     child: Image.file(_idProofBack!, width: 150, height: 150, fit: BoxFit.cover,),
                   ):Center(),
                   const Gap(14),
-                  ElevatedButton(onPressed: () {
+                  _buildButton(title: "Id Proof Back", icon: Icons.camera_alt_outlined, onClicked: () {
                     pickImage(ImageSource.camera, "idProofBack");
-                  }, child: Text("Id Proof Back")),
+                  }),
+                  _errors['id_card_back_photo'] != null ?
+                  Text(_errors['id_card_back_photo'], style: TextStyle(color: Colors.red),):
+                  Text(""),
                   Divider(thickness: 1,color: Colors.blueGrey,),
                   _registerButton()
                 ],
@@ -101,6 +113,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+  Widget _buildButton(
+      {required String title,
+        required IconData icon,
+        required VoidCallback onClicked}) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          minimumSize: Size.fromHeight(46),
+          primary: Colors.white,
+          onPrimary: Colors.black,
+          textStyle: TextStyle(fontSize: 15)),
+      onPressed: onClicked,
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            size: 28,
+          ),
+          Gap(16),
+          Text(title)
+        ],
+      ),
+    );
+  }
+  
   
   Widget _title(){
     return Container(
@@ -159,6 +195,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           if(value!.isEmpty){
             return "Name is required!";
           }
+          if(_errors['casual_name'] != null){
+            return _errors['casual_name'];
+          }
           return null;
         },
       ),
@@ -181,6 +220,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         validator: (value) {
           if(value!.isEmpty){
             return "Email is required!";
+          }
+          if(_errors['email'] != null){
+            return _errors['email'];
           }
           return null;
         },
@@ -205,6 +247,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           if(value!.isEmpty){
             return "Phone No is required!";
           }
+          if(_errors['casual_phone_no'] != null){
+            return _errors['casual_phone_no'];
+          }
           return null;
         },
       ),
@@ -212,22 +257,43 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Widget _city(){
+    // return Container(
+    //   height: 70,
+    //   child: TextFormField(
+    //     controller: city,
+    //     keyboardType: TextInputType.number,
+    //     decoration: InputDecoration(
+    //       contentPadding: EdgeInsets.all(10),
+    //       labelText: "City",
+    //       prefixIcon: Icon(Icons.location_city),
+    //       border: OutlineInputBorder()
+    //     ),
+    //     validator: (value) {
+    //       if(value!.isEmpty){
+    //         return "City is required";
+    //       }
+    //       if(_errors['cityId'] != null){
+    //         return _errors['cityId'];
+    //       }
+    //       return null;
+    //     },
+    //   ),
+    // );
+
     return Container(
-      child: TextFormField(
-        controller: city,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(10),
-          labelText: "City",
-          prefixIcon: Icon(Icons.location_city),
-          border: OutlineInputBorder()
-        ),
-        validator: (value) {
-          if(value!.isEmpty){
-            return "City is required";
-          }
-          return null;
+      padding: EdgeInsets.all(10),
+      height: 70,
+      child: DropdownButton(
+        items: [
+          DropdownMenuItem(child: Text("name"), value: "1"),
+          DropdownMenuItem(child: Text("name"), value: "2"),
+          DropdownMenuItem(child: Text("name"), value: "3"),
+        ],
+        // value: "s",
+        onChanged: (value) {
+
         },
+        isExpanded: true,
       ),
     );
   }
@@ -251,6 +317,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
         validator: (value) {
           if(value!.isEmpty){
             return "Password is required!";
+          }
+          if(_errors['password'] != null){
+            return _errors['password'];
           }
           return null;
         },
@@ -278,6 +347,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
           if(value!.isEmpty){
             return "Confirm Password is required!";
           }
+          if(_errors['passwordConfirmation'] != null){
+            return _errors['passwordConfirmation'];
+          }
           return null;
         },
       ),
@@ -295,13 +367,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
             )
         ),onPressed: () {
         var model = new Casual();
-        model.casualName = name.text;
+        model.casual_name = name.text;
         model.email = email.text;
-        model.casualPhoneNo = phoneNo.text;
+        model.casual_phone_no = phoneNo.text;
         model.cityId = int.tryParse(city.text);
         model.password = password.text;
         model.passwordConfirmation = cPassword.text;
-        print(model.cityId.runtimeType);
+        // print(model.cityId.runtimeType);
         _signUpForm.currentState!.validate();
         register(context, model);
       },child: Text("Register Now"),),
@@ -314,11 +386,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // print(result.stream.bytesToString());
       // final decodedMap = json.decode(result);
       // print(result.statusCode);
-      print(result);
+      setState(() {
+        _errors = _casual.getCasualDataWithNull();
+      });
+      if(result['status']){
+        Constants.showFlushBar(context, result['message']);
+        Constants.goToLogin(context, LoginScreen());
+      }else{
+        if(result.containsKey('error')){
+          // print(result['error']);
+          result['error'].forEach((errors) {
+            print(errors);
+            _errors.forEach((key, value) {
+              if(errors['param'] == key && _errors[key] == null){
+                _errors[key] = errors['msg'];
+              }
+            });
+          });
+
+
+          print(_errors);
+        }
+      }
+      _signUpForm.currentState!.validate();
 
     } on Exception catch (e) {
       Constants.showFlushBar(context, e.toString());
     }
+  }
+
+  getCities() async {
+     var result = _casualService.
   }
 
 

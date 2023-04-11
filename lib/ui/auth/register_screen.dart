@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:casual/models/casual.dart';
+import 'package:casual/models/city.dart';
 import 'package:casual/services/casual_service.dart';
 import 'package:casual/ui/auth/login_screen.dart';
 import 'package:casual/utils/constants.dart';
@@ -24,6 +25,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   List fileData = [];
   final CasualService _casualService = CasualService();
   final Casual _casual = Casual();
+  final List<City> _cities = <City>[];
+
   Map<String, dynamic> _errors = <String, dynamic>{};
 
   // =======TextEditingController==================
@@ -37,6 +40,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   bool _obscure = true;
   bool _cPassObscure = true;
+  String? cityValue;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchCities();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +72,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const Gap(14),
                   _phoneNo(),
                   const Gap(14),
-                  _city(),
+                  DropdownButton(
+                    value: cityValue,
+                    hint: Text("select city"),
+                    icon: Icon(Icons.keyboard_arrow_down),
+                    items: _cities.map((city){
+                      return DropdownMenuItem(
+                          value: city.id,child: Text(city.city_name.toString()));
+                    }).toList(),
+                    isExpanded: true,
+                    onChanged: (value) {
+                      print(value);
+                    },
+                  ),
                   const Gap(14),
                   _password(),
                   const Gap(14),
@@ -256,7 +279,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget _city(){
+  Widget? _city(){
     // return Container(
     //   height: 70,
     //   child: TextFormField(
@@ -280,23 +303,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
     //   ),
     // );
 
-    return Container(
-      padding: EdgeInsets.all(10),
-      height: 70,
-      child: DropdownButton(
-        items: [
-          DropdownMenuItem(child: Text("name"), value: "1"),
-          DropdownMenuItem(child: Text("name"), value: "2"),
-          DropdownMenuItem(child: Text("name"), value: "3"),
-        ],
-        // value: "s",
-        onChanged: (value) {
-
-        },
-        isExpanded: true,
-      ),
-    );
+    // return Container(
+    //   padding: EdgeInsets.all(10),
+    //   height: 70,
+    //   child: DropdownButton(
+    //     value: cityValue,
+    //     items: _cities.map((city) {
+    //       return DropdownMenuItem(child: Text(city!.city_name), value: city.id,)
+    //     }),
+    //     onChanged: (value) {
+    //       setState(() {
+    //         this.cityValue = value;
+    //       });
+    //     },
+    //     isExpanded: true,
+    //   ),
+    // );
+    return null;
   }
+
+  DropdownMenuItem<String> buildMenuItem(String item) =>
+      DropdownMenuItem(value: item,child: Text(item, style: TextStyle(fontWeight: FontWeight.bold,fontSize: 30),),);
 
   Widget _password(){
     return Container(
@@ -415,8 +442,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
-  getCities() async {
-     var result = _casualService.
+  Future<List<City>?> fetchCities() async {
+    // print(_cities);
+     try {
+       Map<String, dynamic> result = await _casualService.getCities();
+       // print(result);
+       if(result['status']){
+         result['cities'].forEach((city) {
+            // print(city);
+            setState(() {
+              _cities.add(City.fromJson(city));
+            });
+         });
+       }
+     } on Exception catch (e) {
+       Constants.checkTokenExpiration(context, e);
+     }
+    // print(_cities[0]);
+    return _cities;
   }
 
 

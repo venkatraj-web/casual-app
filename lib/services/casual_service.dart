@@ -66,7 +66,16 @@ class CasualService {
 
   Future getCities() async{
     var responsedJson;
-    var response = await _repository!.httpGet('');
+    try {
+      var response = await _repository!.httpGet('city/allCities');
+      responsedJson = exceptionHandlers!.returnResponse(response);
+    } on SocketException {
+      throw FetchDataException("No Internet Connection");
+    }
+    on Exception catch (e) {
+      throw e;
+    }
+    return await responsedJson;
   }
 
 }

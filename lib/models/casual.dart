@@ -3,7 +3,8 @@ import 'city.dart';
 class Casual{
   int? id;
   String? casual_id;
-  String? casual_name;
+  String? casual_first_name;
+  String? casual_last_name;
   String? email;
   String? password;
   String? passwordConfirmation;
@@ -14,7 +15,7 @@ class Casual{
   String? id_proof;
   String? casual_avatar;
   String? role;
-  int? identification_number;
+  String? thaiNationalId;
   String? id_card_front_photo;
   String? id_card_back_photo;
   // String? qrCode;
@@ -29,15 +30,16 @@ class Casual{
   String? updatedAt;
   City? city;
 
-  Casual({this.id, this.casual_id, this.casual_name, this.email, this.password, this.passwordConfirmation,
-  this.casual_phone_no, this.cityId, this.date_of_birth, this.gender, this.id_proof, this.casual_avatar, this.role, this.identification_number,
+  Casual({this.id, this.casual_id, this.casual_first_name, this.casual_last_name, this.email, this.password, this.passwordConfirmation,
+  this.casual_phone_no, this.cityId, this.date_of_birth, this.gender, this.id_proof, this.casual_avatar, this.role, this.thaiNationalId,
   this.id_card_front_photo, this.id_card_back_photo, this.remember_token, this.password_reset_token, this.password_reset_expires, this.active,
   this.created_user_id, this.modified_user_id, this.createdAt, this.updatedAt, this.city});
 
   Casual.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     casual_id = json['casual_id'];
-    casual_name = json['casual_name'];
+    casual_first_name = json['casual_first_name'];
+    casual_last_name = json['casual_last_name'];
     email = json['email'];
     password = json['password'];
     passwordConfirmation = json['passwordConfirmation'];
@@ -48,7 +50,7 @@ class Casual{
     id_proof = json['id_proof'];
     casual_avatar = json['casual_avatar'];
     role = json['role'];
-    identification_number = json['identification_number'];
+    thaiNationalId = json['thaiNationalId'];
     id_card_front_photo = json['id_card_front_photo'];
     id_card_back_photo = json['id_card_back_photo'];
     remember_token = json['remember_token'];
@@ -69,7 +71,8 @@ class Casual{
 
     data['id'] = this.id;
     data['casual_id'] = this.casual_id;
-    data['casual_name'] = this.casual_name;
+    data['casual_first_name'] = this.casual_first_name;
+    data['casual_last_name'] = this.casual_last_name;
     data['email'] = this.email;
     data['password'] = this.password;
     data['passwordConfirmation'] = this.passwordConfirmation;
@@ -80,7 +83,7 @@ class Casual{
     data['id_proof'] = this.id_proof;
     data['casual_avatar'] = this.casual_avatar;
     data['role'] = this.role;
-    data['identification_number'] = this.identification_number;
+    data['thaiNationalId'] = this.thaiNationalId;
     data['id_card_front_photo'] = this.id_card_front_photo;
     data['id_card_back_photo'] = this.id_card_back_photo;
     data['remember_token'] = this.remember_token;
@@ -103,7 +106,8 @@ class Casual{
     Map<String, dynamic> casualDataWithNull = {
       'id' : null,
       'casual_id' : null,
-      'casual_name' : null,
+      'casual_first_name' : null,
+      'casual_last_name' : null,
       'email' : null,
       'password' : null,
       'passwordConfirmation' : null,
@@ -114,7 +118,7 @@ class Casual{
       'id_proof' : null,
       'casual_avatar' : null,
       'role' : null,
-      'identification_number' : null,
+      'thaiNationalId' : null,
       'id_card_front_photo' : null,
       'id_card_back_photo' : null,
       'remember_token' : null,

@@ -57,10 +57,13 @@ class Constants{
 
   static checkTokenExpiration(BuildContext context, e){
     // if(e.toString() == "Unauthenticated."){
-    if(e.toString() == "Your Token has expired!. Please Log in again!"){
+    if(e.toString() == "Your Token has Expired!. Please Log in again!"){
       // showFlushBar(context, "Unauthorised : ${e}");
       showFlushBar(context, e.toString());
-      Timer(Duration(seconds: 2), () {
+      Timer(Duration(seconds: 2), () async {
+        SharedPreferences _pref = await SharedPreferences.getInstance();
+        // print(_pref.get('token'));
+        _pref.remove('token');
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (ctx) => LoginScreen()),

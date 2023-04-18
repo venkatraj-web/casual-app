@@ -11,6 +11,7 @@ import 'package:casual/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -27,26 +28,49 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final Casual _casual = Casual();
   final List<City> _cities = <City>[];
 
+  bool _isLoading = false;
+
   Map<String, dynamic> _errors = <String, dynamic>{};
 
   // =======TextEditingController==================
   final _signUpForm = GlobalKey<FormState>();
-  TextEditingController name = TextEditingController();
+  TextEditingController firstName = TextEditingController();
+  TextEditingController lastName = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phoneNo = TextEditingController();
+  TextEditingController thaiNationalId = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController cPassword = TextEditingController();
 
+  DateTime _selectedDate = DateTime.now();
+  TimeOfDay _selectedTime = TimeOfDay.now();
+
   bool _obscure = true;
   bool _cPassObscure = true;
-  String? cityValue;
+  int? cityValue;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     fetchCities();
+  }
+
+  String get getDate{
+    return DateFormat('yyyy-MM-dd').format(_selectedDate);
+    // return DateFormat.yMMMd().format(_selectedDate);
+    // return DateFormat.yM().format(_selectedDate);
+    // return DateFormat('MM-dd-yyyy').format(_selectedDate);
+    // return DateFormat('dd-MMM-yyyy').format(_selectedDate);
+  }
+  String get getTime{
+    final now = DateTime.now();
+    final dateTime = DateTime(
+      now.year, now.month, now.day, _selectedTime.hour, _selectedTime.minute
+    );
+    return DateFormat('hh:mm a').format(dateTime);
+    // return DateFormat('HH:mm a').format(dateTime); // 24 hour Railway Format
   }
 
   @override
@@ -66,30 +90,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const Gap(14),
                   _title(),
                   const Gap(14),
-                  _name(),
+                  _firstName(),
+                  const Gap(14),
+                  _lastName(),
                   const Gap(14),
                   _email(),
                   const Gap(14),
                   _phoneNo(),
                   const Gap(14),
-                  DropdownButton(
-                    value: cityValue,
-                    hint: Text("select city"),
-                    icon: Icon(Icons.keyboard_arrow_down),
-                    items: _cities.map((city){
-                      return DropdownMenuItem(
-                          value: city.id,child: Text(city.city_name.toString()));
-                    }).toList(),
-                    isExpanded: true,
-                    onChanged: (value) {
-                      print(value);
-                    },
-                  ),
+                  _city(),
+                  _errors['cityId'] != null ? Text(_errors['cityId'], style: TextStyle(color: Colors.red),) : Text(''),
                   const Gap(14),
                   _password(),
                   const Gap(14),
                   _cpassword(),
                   const Gap(14),
+                  Row(
+                    children: [
+                      ElevatedButton(onPressed: () => openDatePicker(), child: Text("DOB")),
+                      Gap(20),
+                      Text('Selected DOB : $getDate')
+                    ],
+                  ),
+                  _errors['date_of_birth'] != null ? Text(_errors['date_of_birth'], style: TextStyle(color: Colors.red),) : Gap(5),
+                  // Row(
+                  //   children: [
+                  //     ElevatedButton(onPressed: () => openTimePicker(), child: Text("Time")),
+                  //     Gap(20),
+                  //     Text("Selected Time - $getTime")
+                  //   ],
+                  // ),
+                  const Gap(14),
+                  _thaiID(),
                   _avatar != null ?
                   ClipOval(
                     child: Image.file(_avatar!, width: 150, height: 150, fit: BoxFit.cover),
@@ -202,27 +234,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
     });
   }
 
-  Widget _name(){
+  Widget _firstName(){
     return Container(
       height: 70,
       child: TextFormField(
-        controller: name,
+        controller: firstName,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(10),
-          labelText: "Name",
+          labelText: "First Name",
           hintText: "casual",
           border: OutlineInputBorder(),
           prefixIcon: Icon(Icons.person)
         ),
         validator: (value) {
           if(value!.isEmpty){
-            return "Name is required!";
+            return "First Name is required!";
           }
-          if(_errors['casual_name'] != null){
-            return _errors['casual_name'];
+          if(_errors['casual_first_name'] != null){
+            return _errors['casual_first_name'];
           }
           return null;
         },
+      ),
+    );
+  }
+
+  Widget _lastName(){
+    return Container(
+      height: 70,
+      child: TextFormField(
+        controller: lastName,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(10),
+          border: OutlineInputBorder(),
+          labelText: "Last Name",
+          hintText: "raj",
+          prefixIcon: Icon(Icons.person_outline)
+        ),
+      validator: (value) {
+        if(value!.isEmpty){
+          return "Last Name is required!!";
+        }
+        if(_errors['casual_last_name'] != null){
+          return _errors['casual_last_name'];
+        }
+      },
       ),
     );
   }
@@ -279,47 +335,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  Widget? _city(){
-    // return Container(
-    //   height: 70,
-    //   child: TextFormField(
-    //     controller: city,
-    //     keyboardType: TextInputType.number,
-    //     decoration: InputDecoration(
-    //       contentPadding: EdgeInsets.all(10),
-    //       labelText: "City",
-    //       prefixIcon: Icon(Icons.location_city),
-    //       border: OutlineInputBorder()
-    //     ),
-    //     validator: (value) {
-    //       if(value!.isEmpty){
-    //         return "City is required";
-    //       }
-    //       if(_errors['cityId'] != null){
-    //         return _errors['cityId'];
-    //       }
-    //       return null;
-    //     },
-    //   ),
-    // );
-
-    // return Container(
-    //   padding: EdgeInsets.all(10),
-    //   height: 70,
-    //   child: DropdownButton(
-    //     value: cityValue,
-    //     items: _cities.map((city) {
-    //       return DropdownMenuItem(child: Text(city!.city_name), value: city.id,)
-    //     }),
-    //     onChanged: (value) {
-    //       setState(() {
-    //         this.cityValue = value;
-    //       });
-    //     },
-    //     isExpanded: true,
-    //   ),
-    // );
-    return null;
+  Widget _city(){
+    return Container(
+      child: DropdownButtonFormField(
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(10),
+          border: OutlineInputBorder(),
+        ),
+        value: cityValue,
+        hint: Text("select city"),
+        icon: Icon(Icons.keyboard_arrow_down),
+        items: _cities.map((city){
+          return DropdownMenuItem(
+              value: city.id,child: Text(city.city_name.toString()));
+        }).toList(),
+        isExpanded: true,
+        onChanged: (value) {
+          // print(value);
+          setState(() {
+            cityValue = value as int;
+          });
+        },
+      ),
+    );
   }
 
   DropdownMenuItem<String> buildMenuItem(String item) =>
@@ -383,6 +421,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  Widget _thaiID() {
+    return Container(
+      height: 70,
+      child: TextFormField(
+        controller: thaiNationalId,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(10),
+          labelText: "Thai ID",
+          hintText: "enter 13 digit thai national id!",
+          border: OutlineInputBorder()
+        ),
+        validator: (value) {
+          if(value!.isEmpty){
+            return "Thai ID is required!";
+          }
+          if(_errors['thaiNationalId'] != null){
+            return _errors['thaiNationalId'];
+          }
+          return null;
+        },
+      ),
+    );
+  }
+
   Widget _registerButton(){
    return Container(
       width: double.infinity,
@@ -394,16 +457,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
             )
         ),onPressed: () {
         var model = new Casual();
-        model.casual_name = name.text;
+        model.casual_first_name = firstName.text;
+        model.casual_last_name = lastName.text;
         model.email = email.text;
         model.casual_phone_no = phoneNo.text;
-        model.cityId = int.tryParse(city.text);
+        // model.cityId = int.tryParse(city.text);
+        model.cityId = cityValue;
         model.password = password.text;
         model.passwordConfirmation = cPassword.text;
+        model.date_of_birth = getDate;
+        model.thaiNationalId = thaiNationalId.text;
         // print(model.cityId.runtimeType);
+        setState(() {
+          _isLoading = true;
+        });
         _signUpForm.currentState!.validate();
         register(context, model);
-      },child: Text("Register Now"),),
+      },child: _isLoading ? CircularProgressIndicator() :  Text("Register Now"),),
     );
   }
 
@@ -414,6 +484,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       // final decodedMap = json.decode(result);
       // print(result.statusCode);
       setState(() {
+        _isLoading = false;
         _errors = _casual.getCasualDataWithNull();
       });
       if(result['status']){
@@ -423,7 +494,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         if(result.containsKey('error')){
           // print(result['error']);
           result['error'].forEach((errors) {
-            print(errors);
+            // print(errors);
             _errors.forEach((key, value) {
               if(errors['param'] == key && _errors[key] == null){
                 _errors[key] = errors['msg'];
@@ -460,6 +531,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
      }
     // print(_cities[0]);
     return _cities;
+  }
+
+  Future<void> openDatePicker() async {
+    final selectedDate = await showDatePicker(context: context, initialDate: _selectedDate, firstDate: DateTime(1960, 4, 1), lastDate: DateTime.now());
+
+    if(selectedDate != null){
+      setState(() {
+        _selectedDate = selectedDate;
+      });
+    }
+  }
+
+  Future<void> openTimePicker() async {
+    final selectedTime = await showTimePicker(context: context, initialTime: _selectedTime);
+
+    if(selectedTime != null){
+      setState(() {
+        _selectedTime = selectedTime;
+      });
+    }
   }
 
 

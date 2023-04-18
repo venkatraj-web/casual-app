@@ -35,12 +35,48 @@ class _BottomBarState extends State<BottomBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("Bottom Bar")),
+        // backgroundColor: Color(0Xff111E28),
+        foregroundColor: Colors.white,
+        title: Center(child: Text("Casual")),
         actions: [
           IconButton(onPressed: () {
             Constants.showLogoutDialog(context);
           }, icon: Icon(Icons.power_settings_new))
         ],
+        leading: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Container(
+            width: 150,
+            height: 30,
+            // color: Colors.purple,
+            child: Stack(
+              children: [
+                IconButton(
+                  alignment: Alignment.center,
+                  icon: Icon(Icons.notifications),
+                  onPressed: () {
+                    Constants.showFlutterToast("Notifications", Colors.orange);
+                  },
+                ),
+                Positioned(
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        top: 4.0,
+                        right: 0,
+                        child: Icon(
+                          size: 15,
+                          Icons.brightness_1,
+                          color: Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
       body: PageView(
         controller: _pageController,
@@ -60,7 +96,7 @@ class _BottomBarState extends State<BottomBar> {
         selectedItemColor: Colors.blueGrey,
         unselectedItemColor: Color(0xFF526480),
         type: BottomNavigationBarType.fixed,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             label: "home",
             icon: Icon(Icons.home_outlined),

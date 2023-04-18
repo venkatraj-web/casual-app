@@ -11,7 +11,7 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveClientMixin{
   CasualService _casualService = CasualService();
   Casual? _casual;
   Map<String, dynamic> _casualData = new Map<String, dynamic>();
@@ -48,13 +48,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Container(
+      padding: EdgeInsets.all(20),
       child: _isLoading 
           ? Center(child: CircularProgressIndicator(),)
       : ListView(
         children: [
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Gap(14),
               Center(
@@ -66,15 +73,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   radius: 70,
                 ),
               ),
+              Gap(34),
+              Text("ID : ${_casual!.casual_id}"),
               Gap(14),
-              Text("Name : ${_casual!.casual_name}"),
+              Text("Name : ${_casual!.casual_first_name}"),
               Gap(14),
               Text("Email : ${_casual!.email}"),
               Gap(14),
               Text("PhoneNo : ${_casual!.casual_phone_no}"),
               Gap(14),
-              // Text("City : ${_casual!.city!.cityName}"),
+              Text("City : ${_casual!.city!.city_name}"),
               Gap(14),
+              Text("ID Proof : ${_casual!.id_proof}")
 
             ],
           )

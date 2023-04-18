@@ -8,7 +8,7 @@ import 'package:http_parser/http_parser.dart';
 class Repository{
 
   String _baseUrl = "http://www.qikcasual.com/api";
-  // String _baseUrl = "http://192.168.1.7:3006/api";
+  // String _baseUrl = "http://192.168.1.8:3006/api";
 
   String formater(String url){
     return _baseUrl + "/" + url;
@@ -28,6 +28,10 @@ class Repository{
 
   Future httpGet(String api) async {
     return await http.get(Uri.parse(_baseUrl + "/" + api), headers: await getHeaders());
+  }
+
+  Future httpGetById(String api,paramId) async{
+    return await http.get(Uri.parse(_baseUrl + "/" + api + "/" + paramId.toString()), headers: await getHeaders());
   }
 
   Future<dynamic> httpPost(String api, data) async {
@@ -57,12 +61,15 @@ class Repository{
     }
     // print(data.cityId != null ? data.cityId.toString() : null.toString() );
     // print(data.cityId.toString() );
-    request.fields['casual_name'] = data.casual_name!;
+    request.fields['casual_first_name'] = data.casual_first_name!;
+    request.fields['casual_last_name'] = data.casual_last_name!;
     request.fields['email'] = data.email!;
     request.fields['casual_phone_no'] = data.casual_phone_no!;
     request.fields['cityId'] = data.cityId != null ? data.cityId.toString() : null.toString();
     request.fields['password'] = data.password!;
     request.fields['passwordConfirmation'] = data.passwordConfirmation!;
+    request.fields['thaiNationalId'] = data.thaiNationalId!;
+    request.fields['date_of_birth'] = data.date_of_birth!;
     request.files.addAll(newList);
     var streamedResponse = await request.send();
     // print("streamedResponse");

@@ -128,7 +128,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ): Center(),
                   const Gap(10),
                   _buildButton(title: "profile", icon: Icons.camera_alt_outlined, onClicked: () async {
-                    pickImage(ImageSource.camera, "avatar");
+                    // pickImage(ImageSource.camera, "avatar");
+                    openBottomSheet(context);
                   }),
                   Gap(10),
                   _errors['casual_avatar'] != null ?
@@ -213,6 +214,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  void openBottomSheet(BuildContext context){
+    showModalBottomSheet(context: context,
+      isDismissible: true,
+      enableDrag: false,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(
+        top: Radius.circular(25)
+      )),
+      builder: (context){
+      return SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Align(alignment: Alignment.topRight,
+                child: IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.close))),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                ElevatedButton(onPressed: () {
+                  Navigator.pop(context);
+                  pickImage(ImageSource.camera, "avatar");
+                }, child: Row(
+                  children: [Icon(Icons.camera_alt_outlined),Text("Camera")],
+                )),
+                  ElevatedButton(onPressed: () {
+                    Navigator.pop(context);
+                    pickImage(ImageSource.gallery, "avatar");
+                  }, child: Row(
+                    children: [Icon(Icons.photo_album_outlined),Text("Gallery")],
+                  ))
+                ],
+              ),
+            ),
+            Gap(20)
+          ],
+        ),
+      );
+    },);
+  }
   pickImage(ImageSource source, String fileName) async{
     final img = await ImagePicker().pickImage(source: source);
     if(img == null) return;

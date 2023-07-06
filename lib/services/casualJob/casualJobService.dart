@@ -37,5 +37,29 @@ class CasualJobService{
     return responsedJson;
   }
 
+  jobApply(int? casualId) async{
+    try {
+      var response = await _repository!.httpApplyJob("casual/job/apply?job_id=", casualId);
+      responsedJson = await _exceptionHandlers!.returnResponse(response);
+    } on SocketException {
+      throw FetchDataException("No Internet Connection!!");
+    }on Exception catch (e) {
+      throw e;
+    }
+    return responsedJson;
+  }
+
+  checkJobIsApplyiedOrNot(int? jobId) async{
+    try {
+      var response = await _repository!.httpGetById("casual/job/check-job-is-applied-or-not", jobId);
+      responsedJson = await _exceptionHandlers!.returnResponse(response);
+    }  on SocketException {
+      throw FetchDataException("No Internet Connection!!");
+    }on Exception catch (e) {
+      throw e;
+    }
+    return responsedJson;
+  }
+
 
 }

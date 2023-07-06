@@ -1,3 +1,4 @@
+import 'package:casual/ui/activity/activityScreen.dart';
 import 'package:casual/ui/home_screen.dart';
 import 'package:casual/ui/profile_screen.dart';
 import 'package:casual/utils/constants.dart';
@@ -17,7 +18,9 @@ class _BottomBarState extends State<BottomBar> {
 
   static final List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
+    Text("Search"),
     Text("Rewards"),
+    ActivityScreen(),
     ProfileScreen()
   ];
 
@@ -103,9 +106,19 @@ class _BottomBarState extends State<BottomBar> {
             activeIcon: Icon(Icons.home)
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.search_off_sharp),
+            label: "search",
+            activeIcon: Icon(Icons.search)
+          ),
+          BottomNavigationBarItem(
               label: "rewards",
               icon: Icon(Icons.account_balance_wallet_outlined),
               activeIcon: Icon(Icons.account_balance_wallet)
+          ),
+          BottomNavigationBarItem(
+              label: "activity",
+              icon: Icon(Icons.local_activity_outlined),
+              activeIcon: Icon(Icons.local_activity)
           ),
           BottomNavigationBarItem(
               label: "profile",

@@ -7,8 +7,8 @@ import 'package:http_parser/http_parser.dart';
 
 class Repository{
 
-  String _baseUrl = "http://www.qikcasual.com/api";
-  // String _baseUrl = "http://192.168.1.8:3006/api";
+  // String _baseUrl = "http://www.qikcasual.com/api";
+  String _baseUrl = "http://192.168.1.2:3006/api";
 
   String formater(String url){
     return _baseUrl + "/" + url;
@@ -37,6 +37,10 @@ class Repository{
   Future<dynamic> httpPost(String api, data) async {
     // print("email last = ${data}");
     return await http.post(Uri.parse(_baseUrl + "/" + api), body: data, headers:await getHeaders());
+  }
+
+  Future<dynamic> httpApplyJob(String api, id) async {
+    return await http.post(Uri.parse(_baseUrl + "/" + api + id.toString()), headers:await getHeaders());
   }
 
   Future<dynamic> httpPostFormData(String api, List<dynamic> images,Casual data) async{

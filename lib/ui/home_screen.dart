@@ -255,7 +255,6 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
   Widget CasualJobCard(CasualJob job){
     return InkWell(
       onTap: () {
-        print("Job Details");
         Navigator.push(context, MaterialPageRoute(builder: (_) => JobDetailsScreen(job: job,)));
       },
       child: Container(

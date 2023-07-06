@@ -98,6 +98,15 @@ class _JobListScreenState extends State<JobListScreen> {
                   children: [
                     Gap(20),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Icon(Icons.location_on, size: 18,color: Styles.errorColor),
+                        Text(widget.property!.city!.city_name!,  style: TextStyle(fontWeight: FontWeight.bold,
+                            letterSpacing: 1, fontSize: 12, color: Styles.lightBgColor))
+                      ],
+                    ),
+                    Gap(20),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -166,14 +175,15 @@ class _JobListScreenState extends State<JobListScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Icon(Icons.location_on, size: 18,),
-                    Text(job.city!.city_name!,  style: TextStyle(fontWeight: FontWeight.bold,
-                        letterSpacing: 1, fontSize: 12, color: Color(0xff4C646A)))
-                  ],
-                ),
+                // Row(
+                //   crossAxisAlignment: CrossAxisAlignment.end,
+                //   children: [
+                //     Icon(Icons.location_on, size: 18,),
+                //     Text(job.city!.city_name!,  style: TextStyle(fontWeight: FontWeight.bold,
+                //         letterSpacing: 1, fontSize: 12, color: Color(0xff4C646A)))
+                //   ],
+                // ),
+                Text("${job.no_of_casuals} Vacancies"),
                 Text("Casual".toUpperCase(), style: TextStyle(
                     fontWeight: FontWeight.bold, letterSpacing: 1, fontSize: 12, color: Color(0xff4C646A)
                 ),),

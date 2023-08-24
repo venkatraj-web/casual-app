@@ -11,7 +11,7 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveClientMixin{
+class _ProfileScreenState extends State<ProfileScreen>{
   CasualService _casualService = CasualService();
   Casual? _casual;
   Map<String, dynamic> _casualData = new Map<String, dynamic>();
@@ -48,17 +48,13 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
   }
 
   @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Container(
       padding: EdgeInsets.all(20),
       child: _isLoading 
           ? Center(child: CircularProgressIndicator(),)
       : ListView(
+        physics: BouncingScrollPhysics(),
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,23 +69,35 @@ class _ProfileScreenState extends State<ProfileScreen> with AutomaticKeepAliveCl
                   radius: 70,
                 ),
               ),
-              Gap(34),
-              Text("ID : ${_casual!.casual_id}"),
               Gap(14),
-              Text("Name : ${_casual!.casual_first_name}"),
+              Text("Bio", style: TextStyle(fontSize: 25),),
               Gap(14),
-              Text("Email : ${_casual!.email}"),
+              _txtBox("ID : ${_casual!.casual_id}"),
               Gap(14),
-              Text("PhoneNo : ${_casual!.casual_phone_no}"),
+              _txtBox("Name : ${_casual!.casual_first_name}"),
               Gap(14),
-              Text("City : ${_casual!.city!.city_name}"),
+              _txtBox("Email : ${_casual!.email}"),
               Gap(14),
-              Text("ID Proof : ${_casual!.id_proof}")
-
+              _txtBox("PhoneNo : ${_casual!.casual_phone_no}"),
+              Gap(14),
+              _txtBox("City : ${_casual!.city!.city_name}"),
+              Gap(14),
             ],
           )
         ],
       )
+    );
+  }
+
+  Widget _txtBox(String data){
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        border: Border.all(),
+        borderRadius: BorderRadius.circular(10)
+      ),
+      child: Text(data),
     );
   }
 }

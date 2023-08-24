@@ -3,7 +3,6 @@ import 'package:casual/ui/home_screen.dart';
 import 'package:casual/ui/profile_screen.dart';
 import 'package:casual/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -17,11 +16,11 @@ class _BottomBarState extends State<BottomBar> {
   PageController _pageController = PageController();
 
   static final List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
-    Text("Search"),
-    Text("Rewards"),
-    ActivityScreen(),
-    ProfileScreen()
+    const HomeScreen(),
+    const Text("Search"),
+    const Text("Rewards"),
+    const ActivityScreen(),
+    const ProfileScreen()
   ];
 
   _onItemTabbed(int index){
@@ -40,15 +39,15 @@ class _BottomBarState extends State<BottomBar> {
       appBar: AppBar(
         // backgroundColor: Color(0Xff111E28),
         foregroundColor: Colors.white,
-        title: Center(child: Text("Casual")),
+        title: const Center(child: Text("Casual")),
         actions: [
           IconButton(onPressed: () {
             Constants.showLogoutDialog(context);
-          }, icon: Icon(Icons.power_settings_new))
+          }, icon: const Icon(Icons.power_settings_new))
         ],
         leading: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Container(
+          child: SizedBox(
             width: 150,
             height: 30,
             // color: Colors.purple,
@@ -56,14 +55,14 @@ class _BottomBarState extends State<BottomBar> {
               children: [
                 IconButton(
                   alignment: Alignment.center,
-                  icon: Icon(Icons.notifications),
+                  icon: const Icon(Icons.notifications),
                   onPressed: () {
                     Constants.showFlutterToast("Notifications", Colors.orange);
                   },
                 ),
                 Positioned(
                   child: Stack(
-                    children: [
+                    children: const [
                       Positioned(
                         top: 4.0,
                         right: 0,
@@ -83,9 +82,9 @@ class _BottomBarState extends State<BottomBar> {
       ),
       body: PageView(
         controller: _pageController,
-        children: _widgetOptions,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         onPageChanged: _onPageChanged,
+        children: _widgetOptions,
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTabbed,
@@ -97,7 +96,7 @@ class _BottomBarState extends State<BottomBar> {
         currentIndex: selectedIndex,
         elevation: 100,
         selectedItemColor: Colors.blueGrey,
-        unselectedItemColor: Color(0xFF526480),
+        unselectedItemColor: const Color(0xFF526480),
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
